@@ -2,7 +2,13 @@
 
 Ein intelligenter Bilderrahmen mit Informationsdisplay basierend auf Raspberry Pi und MagicMirror², der automatisch zwischen Foto-Slideshow und Wetterinformationen/Nachrichten wechselt.
 
-![Display States](image/Image.JPG) ![Information View](image/Information.jpg)
+<p align="center">
+  <img src="image/Image.JPG" alt="Foto-Modus" width="45%" />
+  <img src="image/Information.jpg" alt="Info-Modus" width="45%" />
+</p>
+<p align="center">
+  <em>Links: Foto-Modus (StateB) | Rechts: Info-Modus (StateA)</em>
+</p>
 
 ## 📋 Inhaltsverzeichnis
 
