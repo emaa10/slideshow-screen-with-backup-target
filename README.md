@@ -53,7 +53,7 @@ Ein intelligenter Bilderrahmen mit Informationsdisplay basierend auf Raspberry P
 
 ### 3D-Druck Dateien
 Alle STL/F3D-Dateien befinden sich im Ordner [`3d_models/`](https://github.com/emaa10/slideshow-screen-with-backup-target/tree/master/3d_models):
-- `Alles.stl` - Komplettes Gehäuse (All-in-One)
+- `Alles.stl` - Komplettes Gehäuse (All-in-One) - !! SO NICHT DRUCKEN! bitte einzeln drucken
 - `Blende_links.f3d` - Linke Rahmenblende
 - `Blende_rechts.f3d` - Rechte Rahmenblende
 - `Boden_links.f3d` - Linker Bodenteil
@@ -61,10 +61,11 @@ Alle STL/F3D-Dateien befinden sich im Ordner [`3d_models/`](https://github.com/e
 - `Ständer.f3d` - Standfuß
 
 **Druckeinstellungen:**
-- Layer Height: 0.2mm
-- Infill: 20%
-- Material: PETG oder PLA
-- Support: Nur für Ständer empfohlen
+- EINZELN DRUCKEN !
+- Layer Height: 0.12mm
+- Infill: 10%
+- Material: PLA
+- Support: Tree
 
 ## 🏗️ Software-Architektur
 
@@ -133,6 +134,8 @@ git clone https://github.com/Jopyth/MMM-Remote-Control.git
 cd MMM-Remote-Control
 npm install
 
+cd ..
+
 # MMM-Regenradar
 git clone https://github.com/timdows/MMM-Regenradar.git
 ```
@@ -141,7 +144,7 @@ git clone https://github.com/timdows/MMM-Regenradar.git
 
 ```bash
 cd ~
-git clone <DEIN_REPO_URL> magicmirror-display
+git clone https://github.com/emaa10/slideshow-screen-with-backup-target magicmirror-display
 cd magicmirror-display
 
 # Config kopieren
@@ -159,41 +162,21 @@ chmod +x ~/icloud/icloud_photo.sh
 
 ### 4. Raspberry Pi Konfiguration
 
-#### Autostart ohne Menüleiste
-
-```bash
-# Desktop-Autostart bearbeiten
-sudo nano ~/.config/lxsession/LXDE-pi/autostart
-```
-
-Inhalt ersetzen mit:
-```
-@lxpanel --profile LXDE-pi
-@pcmanfm --desktop --profile LXDE-pi
-@xscreensaver -no-splash
-
-# Bildschirmschoner & Energieverwaltung deaktivieren
-@xset s off
-@xset -dpms
-@xset s noblank
-
-# Desktop-Hintergrund schwarz
-@pcmanfm --set-wallpaper="/usr/share/rpd-wallpaper/black.png"
-
-# Cursor verstecken (optional)
-@unclutter -idle 0.1 -root
-```
-
-#### Panel ausblenden (Menüleiste entfernen)
-
+#### Menüleiste autohide
 ```bash
 # Panel-Konfiguration bearbeiten
-nano ~/.config/lxpanel/LXDE-pi/panels/panel
+nano ~/.config/wf-panel-pi/wf-panel-pi.ini
 ```
 
-Ändere die Zeile:
+Füge ein:
 ```
-autohide=1
+[panel]
+position=top
+icon_size=16
+window-list_max_width=150
+monitor=HDMI-A-1
+autohide=true
+autohide_duration=500
 ```
 
 ### 5. Crontab einrichten
@@ -207,8 +190,8 @@ Folgende Zeilen hinzufügen:
 # Scheduler jede Minute ausführen
 * * * * * /usr/bin/python3 /home/pi/magicmirror_scheduler.py >> /home/pi/scheduler.log 2>&1
 
-# iCloud Log täglich um 1:01 Uhr leeren
-1 1 * * * echo > /home/pi/icloud/log.txt
+# iCloud Log täglich um 1:00 Uhr leeren
+0 1 * * * echo > /home/pi/icloud/log.txt
 ```
 
 ### 6. WireGuard VPN (Optional)
@@ -227,7 +210,7 @@ DNS = 1.1.1.1
 
 [Peer]
 PublicKey = <SERVER_PUBLIC_KEY>
-Endpoint = <SERVER_IP>:51820
+Endpoint = <SERVER_IP>:<PORT>
 AllowedIPs = 0.0.0.0/0
 PersistentKeepalive = 25
 ```
@@ -259,23 +242,23 @@ ICLOUD_URL = "https://deine-icloud-shared-album-url"
 ICLOUD_DIR = "/home/pi/icloud/images"
 ```
 
-Das Script `icloud_photo.sh` lädt automatisch neue Fotos herunter.
+Das Script `icloud_photo.sh` lädt automatisch um 7:00 Uhr neue Fotos herunter.
 
 ### MagicMirror Config anpassen
 
 Bearbeite `~/MagicMirror/config/config.js`:
 
 **Wichtige Einstellungen:**
-- Zeile 3: `ipWhitelist` - Netzwerk-Zugriff
-- Zeile 25: `apiKey` - Remote-Control API-Key
-- Zeile 114: Koordinaten für Wetter (lat/lon)
-- Zeile 172: Müllkalender URL
+- `ipWhitelist` - Netzwerk-Zugriff
+- `apiKey` - Remote-Control API-Key
+- Koordinaten für Wetter (lat/lon)
+- Müllkalender URL
 
 ### Wallpaper platzieren
 
 ```bash
 # Statisches Hintergrundbild für Info-Modus
-cp image/Information.jpg ~/MagicMirror/modules/MMM-BackgroundSlideshow/wallpaper.jpg
+cp image/wallpaper.jpg ~/MagicMirror/modules/MMM-BackgroundSlideshow/wallpaper.jpg
 ```
 
 ## 📅 Zeitpläne
