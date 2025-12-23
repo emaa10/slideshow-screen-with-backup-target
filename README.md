@@ -46,13 +46,13 @@ Ein intelligenter Bilderrahmen mit Informationsdisplay basierend auf Raspberry P
 | Komponente | Spezifikation |
 |------------|--------------|
 | **Display** | 10,1" Touchscreen (1024x600px) |
-| **Computer** | Raspberry Pi 3B+ |
+| **Computer** | Raspberry Pi 3B+ (jeder aktuelle RPI geht) |
 | **Speicher** | 4TB HDD (WD Elements) |
-| **Gehäuse** | Custom 3D-gedruckt (Modelle im Repo) |
+| **Gehäuse** | Custom 3D-gedruckt ([Link](https://github.com/emaa10/slideshow-screen-with-backup-target/tree/master/3d_models)) |
 | **Stromversorgung** | USB-C Netzteil (min. 2,5A) |
 
 ### 3D-Druck Dateien
-Alle STL/F3D-Dateien befinden sich im Ordner `3d_models/`:
+Alle STL/F3D-Dateien befinden sich im Ordner [`3d_models/`](https://github.com/emaa10/slideshow-screen-with-backup-target/tree/master/3d_models):
 - `Alles.stl` - Komplettes Gehäuse (All-in-One)
 - `Blende_links.f3d` - Linke Rahmenblende
 - `Blende_rechts.f3d` - Rechte Rahmenblende
